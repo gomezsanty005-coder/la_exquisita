@@ -1,1 +1,225 @@
-# la_exquisita
+# la_exquisita[la_exquista.html](https://github.com/user-attachments/files/26580145/la_exquista.html)
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Exquisita - Pedí Online</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', sans-serif; background: #f5f5f5; }
+        
+        /* Header */
+        header { background: linear-gradient(135deg, #ff6b35, #f7931e); color: white; padding: 1rem; position: fixed; width: 100%; top: 0; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .header-content { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.8rem; font-weight: bold; }
+        .cart-info { display: flex; align-items: center; gap: 1rem; }
+        .cart-count { background: #ffd700; color: #333; border-radius: 20px; padding: 0.3rem 0.8rem; font-weight: bold; }
+        
+        /* Hero */
+        .hero { background: linear-gradient(135deg, #ff6b35, #f7931e); color: white; text-align: center; padding: 5rem 1rem 3rem; margin-top: 70px; }
+        .hero h1 { font-size: 2.5rem; margin-bottom: 1rem; }
+        .hero p { font-size: 1.2rem; margin-bottom: 2rem; }
+        
+        /* Menú */
+        .menu-section { padding: 2rem 1rem; max-width: 1200px; margin: 0 auto; }
+        .section-title { font-size: 1.8rem; color: #ff6b35; margin-bottom: 1.5rem; text-align: center; }
+        .menu-grid { display: grid; gap: 1rem; }
+        .menu-item { background: white; border-radius: 15px; padding: 1.5rem; box-shadow: 0 5px 15px rgba(0,0,0,0.1); transition: transform 0.2s; }
+        .menu-item:hover { transform: translateY(-2px); }
+        .item-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; }
+        .item-name { font-size: 1.3rem; font-weight: bold; }
+        .item-price { font-size: 1.4rem; color: #ff6b35; font-weight: bold; }
+        .item-desc { color: #666; margin-bottom: 1rem; font-size: 0.9rem; }
+        .quantity-controls { display: flex; align-items: center; gap: 1rem; }
+        .qty-btn { background: #ff6b35; color: white; border: none; width: 40px; height: 40px; border-radius: 50%; font-size: 1.2rem; cursor: pointer; transition: background 0.2s; }
+        .qty-btn:hover { background: #e55a2b; }
+        .qty-display { font-weight: bold; font-size: 1.2rem; min-width: 25px; text-align: center; }
+        
+        /* Carrito */
+        .cart-section { background: white; padding: 2rem 1rem; margin: 2rem 1rem; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); max-width: 1200px; margin-left: auto; margin-right: auto; }
+        .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; border-bottom: 1px solid #eee; }
+        .cart-item:last-child { border-bottom: none; }
+        .cart-total { font-size: 1.5rem; font-weight: bold; color: #ff6b35; text-align: right; margin-top: 1rem; }
+        
+        /* WhatsApp Order */
+        .order-section { background: linear-gradient(135deg, #25d366, #128c7e); color: white; padding: 2rem 1rem; text-align: center; }
+        .whatsapp-btn { background: #ffd700; color: #333; padding: 1.5rem 3rem; border-radius: 50px; font-size: 1.3rem; font-weight: bold; text-decoration: none; display: inline-block; margin-top: 1rem; box-shadow: 0 10px 25px rgba(0,0,0,0.2); transition: all 0.3s; }
+        .whatsapp-btn:hover { transform: translateY(-3px); box-shadow: 0 15px 35px rgba(0,0,0,0.3); }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2rem; }
+            .menu-grid { grid-template-columns: 1fr; }
+            .cart-item { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <div class="logo">🍕 La Exquisita</div>
+            <div class="cart-info">
+                <span>🛒</span>
+                <span class="cart-count" id="cartCount">0</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <h1>🍕 La Exquisita</h1>
+        <p>Armá tu pedido y enviá directo por WhatsApp</p>
+    </section>
+
+    <!-- Menú Pizzas -->
+    <section class="menu-section">
+        <h2 class="section-title">🍕 PIZZAS</h2>
+        <div class="menu-grid" id="pizzaMenu">
+            <!-- Items se generan con JS -->
+        </div>
+    </section>
+
+    <!-- Menú Empanadas -->
+    <section class="menu-section">
+        <h2 class="section-title">🥟 EMPANADAS (6 unidades)</h2>
+        <div class="menu-grid" id="empanadaMenu">
+            <!-- Items se generan con JS -->
+        </div>
+    </section>
+
+    <!-- Carrito -->
+    <section class="cart-section" id="cartSection">
+        <h2>🛒 Tu Pedido</h2>
+        <div id="cartItems"></div>
+        <div class="cart-total" id="cartTotal">$0</div>
+    </section>
+
+    <!-- WhatsApp Order -->
+    <section class="order-section">
+        <h2>📱 Enviar Pedido por WhatsApp</h2>
+        <p><strong>¡Tocá y se envía automático!</strong></p>
+        <a href="#" class="whatsapp-btn" id="whatsappBtn">🚀 ENVIAR PEDIDO</a>
+        <p style="margin-top: 1rem; font-size: 0.9rem;">Los dueños reciben tu pedido al instante</p>
+    </section>
+
+    <script>
+        // ⭐ CAMBIA ESTE NÚMERO POR EL TUYO ⭐
+        const WHATSAPP_NUMBER = '5491150513598';
+        
+        // Menú completo
+        const menuItems = {
+            pizzas: [
+                { id: 'margherita', name: 'Pizza Margherita', price: 850, desc: 'Mozzarella, tomate, albahaca' },
+                { id: 'especial', name: 'Pizza Especial', price: 1100, desc: 'Jamón, morrones, aceitunas, champiñones' },
+                { id: 'fugazzeta', name: 'Fugazzeta', price: 900, desc: 'Cebolla caramelizada, muzzarella' },
+                { id: 'napolitana', name: 'Napolitana', price: 950, desc: 'Tomate, jamón, morrón' }
+            ],
+            empanadas: [
+                { id: 'carne', name: 'Carne Cortada', price: 650, desc: 'Carne a cuchillo, cebolla, huevo' },
+                { id: 'jamon', name: 'Jamón y Queso', price: 600, desc: 'Jamón crudo, muzzarella' },
+                { id: 'pollo', name: 'Pollo', price: 650, desc: 'Pollo, verdeo, pimentón' },
+                { id: 'verdura', name: 'Verdura', price: 550, desc: 'Espinaca, ricotta, cebolla' }
+            ]
+        };
+
+        // Carrito
+        let cart = {};
+
+        // Renderizar menú
+        function renderMenu() {
+            const pizzaMenu = document.getElementById('pizzaMenu');
+            const empanadaMenu = document.getElementById('empanadaMenu');
+            
+            pizzaMenu.innerHTML = menuItems.pizzas.map(item => `
+                <div class="menu-item" data-id="${item.id}">
+                    <div class="item-header">
+                        <div>
+                            <div class="item-name">${item.name}</div>
+                            <div class="item-desc">${item.desc}</div>
+                        </div>
+                        <div class="item-price">$${item.price}</div>
+                    </div>
+                    <div class="quantity-controls">
+                        <button class="qty-btn" onclick="changeQty('${item.id}', -1)">−</button>
+                        <span class="qty-display">${cart[item.id]?.qty || 0}</span>
+                        <button class="qty-btn" onclick="changeQty('${item.id}', 1)">+</button>
+                    </div>
+                </div>
+            `).join('');
+            
+            empanadaMenu.innerHTML = menuItems.empanadas.map(item => `
+                <div class="menu-item" data-id="${item.id}">
+                    <div class="item-header">
+                        <div>
+                            <div class="item-name">${item.name}</div>
+                            <div class="item-desc">${item.desc}</div>
+                        </div>
+                        <div class="item-price">$${item.price}</div>
+                    </div>
+                    <div class="quantity-controls">
+                        <button class="qty-btn" onclick="changeQty('${item.id}', -1)">−</button>
+                        <span class="qty-display">${cart[item.id]?.qty || 0}</span>
+                        <button class="qty-btn" onclick="changeQty('${item.id}', 1)">+</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Cambiar cantidad
+        function changeQty(id, delta) {
+            if (!cart[id]) cart[id] = { qty: 0, ...menuItems.pizzas.find(i => i.id === id) || menuItems.empanadas.find(i => i.id === id) };
+            cart[id].qty = Math.max(0, cart[id].qty + delta);
+            if (cart[id].qty === 0) delete cart[id];
+            updateCart();
+            renderMenu();
+        }
+
+        // Actualizar carrito
+        function updateCart() {
+            const cartCount = document.getElementById('cartCount');
+            const cartItems = document.getElementById('cartItems');
+            const cartTotal = document.getElementById('cartTotal');
+            const whatsappBtn = document.getElementById('whatsappBtn');
+            
+            const totalItems = Object.values(cart).reduce((sum, item) => sum + item.qty, 0);
+            cartCount.textContent = totalItems;
+            
+            if (totalItems === 0) {
+                cartItems.innerHTML = '<p style="text-align: center; color: #666;">Tu pedido está vacío 😢</p>';
+                cartTotal.textContent = '$0';
+                whatsappBtn.style.display = 'none';
+            } else {
+                cartItems.innerHTML = Object.entries(cart).map(([id, item]) => `
+                    <div class="cart-item">
+                        <span>${item.name} x${item.qty}</span>
+                        <span>$${(item.price * item.qty).toLocaleString()}</span>
+                    </div>
+                `).join('');
+                
+                const total = Object.values(cart).reduce((sum, item) => sum + (item.price * item.qty), 0);
+                cartTotal.textContent = `Total: $${total.toLocaleString()}`;
+                whatsappBtn.style.display = 'inline-block';
+            }
+        }
+
+        // WhatsApp automático
+        document.getElementById('whatsappBtn').addEventListener('click', (e) => {
+            e.preventDefault();
+            const orderText = Object.entries(cart).map(([id, item]) => 
+                `• ${item.name} x${item.qty} ($${item.price * item.qty})`
+            ).join('\n');
+            const total = Object.values(cart).reduce((sum, item) => sum + (item.price * item.qty), 0);
+            const message = `👋 *PEDIDO LA EXQUISITA*\n\n${orderText}\n\n💰 *TOTAL: $${total}*\n📦 Dirección:\n📱 Teléfono:\n\n*Preparalo porfa!* 😊`;
+            
+            const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+        });
+
+        // Inicializar
+        renderMenu();
+        updateCart();
+    </script>
+</body>
+</html>
